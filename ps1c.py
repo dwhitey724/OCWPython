@@ -8,18 +8,18 @@ monthly_interest = float(annual_interest / 12)
 
 lower_bound = float(balance / 12)
 upper_bound = float((balance * (1 + monthly_interest) * 12) / 12)
-convergence = 0.01
+epsilon = 0.01
 
 original_balance = balance  # Initialize value to reset balance after iterating
 
-while abs(balance) > convergence:
+while abs(balance) > epsilon:
     midpoint = (lower_bound + upper_bound) / 2  # Calculate new midpoint, use as minimum payment
     balance = original_balance  # Reset balance
     for month in range(1, 13):
         balance = balance * (1 + monthly_interest) - midpoint  # Calculate remaining balance
-    if balance > convergence:  # If remaining balance is too high, take upper half of values
+    if balance > epsilon:  # If remaining balance is too high, take upper half of values
         lower_bound = midpoint
-    elif balance < -convergence:  # If remaining balance is too low, take lower half of values
+    elif balance < -epsilon:  # If remaining balance is too low, take lower half of values
         upper_bound = midpoint
     else:
         break

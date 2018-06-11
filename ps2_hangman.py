@@ -60,20 +60,21 @@ def hangman():
         """
         Represents a loop of play given a number of turns and the word to guess
         """
-
         guess_iterations = turns
+        history = [None] * len(word)
+        new_word = ['_'] * len(word)  # Empty list of previous correctly guessed letters
+
         for i in range(0, turns):
             print('-------------------------------------')
             print('You have ' + str(guess_iterations) + ' guesses left.')
             print('Available letters: ' + str(letters))
-            guess = input('Please guess a letter: ')
+            guess = input('Please guess a letter: ').lower()
 
-            u_word = underscore(word, guess)
+            u_word = underscore(word, guess, history, new_word)
             letters_left = unused_letters(letters, guess)
             letters = letters_left
 
             result = word.find(guess)
-
 
             if result == -1:
                 print('Oops! That letter is not in my word: ' + u_word)
@@ -90,23 +91,30 @@ def hangman():
                 print('Sorry, you lose.')
                 break
 
+    def underscore(word, guess, guess_history, underscore_word):
+        """
+        Makes underscored version of word. If guess is in word, replaces underscore with guess
+        """
 
-    def underscore(word, guess):
-        """
-        word (str): the word chosen by the game
-        guess (str): the letter guessed by the player
-        returns a list representation of the unfilled and filled in letters
-        """
-        word_list = ['_' if guess not in word else guess]
-        return str(word_list)
+        print(guess_history)
+
+        for i in range(len(word)):
+
+            if guess_history[i] is not None:  # If letter exists in history, set it before checking new letter
+                    underscore_word[i] = guess_history[i]
+
+            if guess == word[i]:  # If letter guessed matches a letter in the word, set it
+                underscore_word[i] = guess
+                guess_history[i] = guess
+
+        return ''.join(underscore_word)
 
     def unused_letters(letters, guess):
         """
         Strips the guess from the available letters list and returns what is left
         """
-        letters_list = list(letters)
-        letters = letters_list.remove(guess)
-        return str(letters_list)
+        new_letters = letters.replace(guess, "")
+        return new_letters
 
     player_turn(word, 8, letters)
 

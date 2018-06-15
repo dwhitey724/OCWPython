@@ -16,7 +16,16 @@ def comp_choose_word(hand, word_list):
     hand: dictionary (string -> int)
     word_list: list (string)
     """
-    # TO DO...
+    comp_words = get_perms(hand, HAND_SIZE)
+    comp_word_scores = []
+
+    for item in comp_words:
+        if is_valid_word(item, hand, word_list):
+            comp_word_scores[item] = get_word_score(item, HAND_SIZE)
+        else:
+            comp_word_scores[item] = 0
+
+    return comp_words[comp_word_scores.index((max(comp_word_scores)))]  # Should return value at index of max score
 
 #
 # Problem #6B: Computer plays a hand

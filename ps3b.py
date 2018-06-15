@@ -17,20 +17,22 @@ def comp_choose_word(hand, word_list):
     word_list: list (string)
     """
     comp_words = get_perms(hand, HAND_SIZE)
-    comp_word_scores = []
+    comp_word_scores = [] * len(comp_words)
 
+    # Get scores for all word permutations. If not a real word, score is 0
     for item in comp_words:
         if is_valid_word(item, hand, word_list):
             comp_word_scores[item] = get_word_score(item, HAND_SIZE)
+            return comp_words[
+                comp_word_scores.index((max(comp_word_scores)))]  # Should return value at index of max score
         else:
-            comp_word_scores[item] = 0
+            return 0
 
-    return comp_words[comp_word_scores.index((max(comp_word_scores)))]  # Should return value at index of max score
 
 #
 # Problem #6B: Computer plays a hand
 #
-def comp_play_hand(hand, word_list):
+def comp_play_hand(hand, word_list, score):
     """
      Allows the computer to play the given hand, as follows:
 
@@ -49,7 +51,20 @@ def comp_play_hand(hand, word_list):
      hand: dictionary (string -> int)
      word_list: list (string)
     """
-    # TO DO ...    
+    total_score = 0
+    print('Current Hand: ' + display_hand(hand))
+    print('')
+
+    comp_word = comp_choose_word(hand, word_list)
+    comp_word_score = get_word_score(comp_word, HAND_SIZE)
+    total_score += comp_word_score
+    print("'{0}' earned {1} points. Total: {2} points".format(comp_word, comp_word_score, total_score))
+    new_hand = update_hand(hand, comp_word)
+
+
+
+
+
     
 #
 # Problem #6C: Playing a game

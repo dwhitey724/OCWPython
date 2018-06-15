@@ -1,4 +1,4 @@
-# OCWPython - MIT Opencourseware Python Problem Sets
+# OCWPython - MIT OpenCourseWare Python Problem Sets
 
 ## Problem Set 1
 - [x] Problem 1: Calculate balance after 1 year of minimum payments
@@ -14,8 +14,8 @@
 ## Problem Set 3
 ### Part A
 - [x] Problem 1: Create function to calculate score of Scrabble-like word game
-- [] Problem 2: Create functions to deal with how hands of letters work
-- [] Problem 3: Create validation function to check words and score appropriately
+- [x] Problem 2: Create functions to deal with how hands of letters work
+- [x] Problem 3: Create validation function to check words and score appropriately
 - [] Problem 4: Create function to allow user to play out a hand
 - [] Problem 5: Create function to play the game
 ### Part B

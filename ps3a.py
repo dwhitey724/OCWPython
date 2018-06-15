@@ -67,12 +67,12 @@ def get_word_score(word, n):
     Returns the score for a word. Assumes the word is a
     valid word.
 
-	The score for a word is the sum of the points for letters
-	in the word multiplied by the length of the word, plus 50
-	points if all n letters are used on the first go.
+    The score for a word is the sum of the points for letters
+    in the word multiplied by the length of the word, plus 50
+    points if all n letters are used on the first go.
 
-	Letters are scored as in Scrabble; A is worth 1, B is
-	worth 3, C is worth 3, D is worth 2, E is worth 1, and so on.
+    Letters are scored as in Scrabble; A is worth 1, B is
+    worth 3, C is worth 3, D is worth 2, E is worth 1, and so on.
 
     word: string (lowercase letters)
     returns: int >= 0
@@ -95,6 +95,8 @@ def get_word_score(word, n):
 #
 # Make sure you understand how this function works and what it does!
 #
+
+
 def display_hand(hand):
     """
     Displays the letters currently in the hand.
@@ -115,6 +117,8 @@ def display_hand(hand):
 #
 # Make sure you understand how this function works and what it does!
 #
+
+
 def deal_hand(n):
     """
     Returns a random hand containing n lowercase letters.
@@ -159,7 +163,16 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    # TO DO ...
+    new_hand = hand
+
+    for letter in word:
+        if new_hand[letter] == 1:
+            del new_hand[letter]
+        else:
+            new_hand[letter] -= 1
+
+    return new_hand
+
 
 #
 # Problem #3: Test word validity
@@ -174,7 +187,16 @@ def is_valid_word(word, hand, word_list):
     hand: dictionary (string -> int)
     word_list: list of lowercase strings
     """
-    # TO DO...
+    hand_letters = []
+    for letter, number in hand.items():
+        if letter in word and number >= word.count(letter):
+            hand_letters += list(letter) * word.count(letter)
+
+    if word in word_list and sorted(word) == (sorted(''.join(hand_letters))):
+        return True
+    else:
+        return False
+
 
 def calculate_handlen(hand):
     handlen = 0
@@ -235,6 +257,7 @@ def play_game(word_list):
     * If the user inputs anything else, ask them again.
     """
     # TO DO...
+
 
 #
 # Build data structures used for entire session and play game

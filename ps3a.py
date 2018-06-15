@@ -247,8 +247,8 @@ def play_hand(hand, word_list, score):
     user_word, total_score = choose_word(score)
 
     if user_word == '.':
-        print('Total Score: ' + str(total_score) + 'points')
-        quit()
+        print('Total Score: ' + str(total_score) + ' points')
+        print('')
 
     elif not is_valid_word(user_word, hand, word_list):
         print('Invalid word, Please try again.')
@@ -261,16 +261,12 @@ def play_hand(hand, word_list, score):
         new_hand = update_hand(hand, user_word)
 
         if len(new_hand) == 0:
-            print('Total Score: ' + str(total_score) + 'points')
-            quit()
+            print('Total Score: ' + str(total_score) + ' points')
+            print('')
+
         else:
             play_hand(new_hand, word_list, total_score)
 
-
-word_list = load_words()
-hand = deal_hand(7)
-total_score = 0
-play_hand(hand, word_list, total_score)
 
 #
 # Problem #5: Playing a game
@@ -291,12 +287,46 @@ def play_game(word_list):
 
     * If the user inputs anything else, ask them again.
     """
-    # TO DO...
+
+    score = 0
+    count = 0
+
+    new_hand = deal_hand(HAND_SIZE)
+    last_hand = new_hand.copy()
+    player_choice = input('Please input "n" to play new hand, "r" to replay last hand, or "e" to exit the game: ')
+
+    while player_choice is not 'e':
+        if player_choice == 'e':
+            break
+
+        elif player_choice == 'n':  # If 'n', make new hand, play hand, store as last hand
+            count += 1
+            new_hand = deal_hand(HAND_SIZE)  # Deal new hand, use that
+            last_hand = new_hand.copy()  # Store hand as last hand to replay
+            play_hand(new_hand, word_list, score)
+            player_choice = input(
+                'Please input "n" to play new hand, "r" to replay last hand, or "e" to exit the game: ')
+
+        elif player_choice == 'r' and count != 0:
+            play_hand(last_hand, word_list, score)
+            last_hand = new_hand.copy()
+            player_choice = input(
+                'Please input "n" to play new hand, "r" to replay last hand, or "e" to exit the game: ')
+
+        elif player_choice == 'r' and count == 0:
+            print('You have no hands to replay!')
+            player_choice = input(
+                'Please input "n" to play new hand, "r" to replay last hand, or "e" to exit the game: ')
+
+        else:
+            print('You have chosen an invalid option. Please try again.')
+            player_choice = input(
+                'Please input "n" to play new hand, "r" to replay last hand, or "e" to exit the game: ')
 
 
 #
 # Build data structures used for entire session and play game
 #
-# if __name__ == '__main__':
-#     word_list = load_words()
-#     play_game(word_list)
+if __name__ == '__main__':
+    word_list = load_words()
+    play_game(word_list)

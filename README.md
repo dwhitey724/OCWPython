@@ -17,7 +17,7 @@
 - [x] Problem 2: Create functions to deal with how hands of letters work
 - [x] Problem 3: Create validation function to check words and score appropriately
 - [x] Problem 4: Create function to allow user to play out a hand
-- [] Problem 5: Create function to play the game
+- [x] Problem 5: Create function to play the game
 ### Part B
 - [] Problem 1: Create function to calculate CPU  score of Scrabble-like word game
 - [] Problem 2: Create functions to deal with how CPU hands of letters work

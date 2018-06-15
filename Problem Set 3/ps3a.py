@@ -209,7 +209,7 @@ def calculate_handlen(hand):
 # Problem #4: Playing a hand
 #
 
-def play_hand(hand, word_list, score):
+def play_hand(hand, word_list):
 
     """
     Allows the user to play the given hand, as follows:
@@ -237,6 +237,7 @@ def play_hand(hand, word_list, score):
       word_list: list of lowercase strings
       
     """
+    global score
 
     def choose_word(score):
         print('Current Hand: ' + display_hand(hand))

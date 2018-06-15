@@ -1,5 +1,4 @@
 from ps3a import *
-import time
 from perm import *
 
 
@@ -40,7 +39,7 @@ def comp_choose_word(hand, word_list):
 #
 # Problem #6B: Computer plays a hand
 #
-def comp_play_hand(hand, word_list, score):
+def comp_play_hand(hand, word_list):
     """
      Allows the computer to play the given hand, as follows:
 
@@ -59,7 +58,7 @@ def comp_play_hand(hand, word_list, score):
      hand: dictionary (string -> int)
      word_list: list (string)
     """
-
+    global score
     print('Current Hand: ' + display_hand(hand))
     print('')
 

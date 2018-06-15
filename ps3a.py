@@ -135,7 +135,7 @@ def deal_hand(n):
     hand = {}
     num_vowels = n / 3
     
-    for i in range(int(num_vowels)):
+    for i in range(round(num_vowels)):
         x = VOWELS[random.randrange(0, len(VOWELS))]
         hand[x] = hand.get(x, 0) + 1
         
@@ -209,7 +209,7 @@ def calculate_handlen(hand):
 # Problem #4: Playing a hand
 #
 
-def play_hand(hand, word_list):
+def play_hand(hand, word_list, score):
 
     """
     Allows the user to play the given hand, as follows:
@@ -237,40 +237,40 @@ def play_hand(hand, word_list):
       word_list: list of lowercase strings
       
     """
-    total_score = []
 
-    def choose_word():
+    def choose_word(score):
         print('Current Hand: ' + display_hand(hand))
         print('')
         user_word = input('Enter word, or a "." to indicate that you are finished: ')
-        return user_word
+        return user_word, score
 
-    user_word = choose_word()
+    user_word, total_score = choose_word(score)
 
     if user_word == '.':
-        print('Total Score: ' + str(sum(total_score)))
+        print('Total Score: ' + str(total_score) + 'points')
         quit()
 
     elif not is_valid_word(user_word, hand, word_list):
         print('Invalid word, Please try again.')
-        user_wordchoose_word()
+        play_hand(hand, word_list, total_score)
 
     else:
         word_score = get_word_score(user_word, calculate_handlen(hand))
-        total_score.append(word_score)
-        print("'{0}' earned {1} points. Total: {2} points".format(user_word, word_score, sum(total_score)))
+        total_score += word_score
+        print("'{0}' earned {1} points. Total: {2} points".format(user_word, word_score, total_score))
         new_hand = update_hand(hand, user_word)
 
         if len(new_hand) == 0:
-            print('Total Score: ' + str(sum(total_score)))
+            print('Total Score: ' + str(total_score) + 'points')
             quit()
         else:
-            choose_word()
+            play_hand(new_hand, word_list, total_score)
 
 
 word_list = load_words()
-hand = deal_hand(9)
-play_hand(hand, word_list)
+hand = deal_hand(7)
+total_score = 0
+play_hand(hand, word_list, total_score)
 
 #
 # Problem #5: Playing a game

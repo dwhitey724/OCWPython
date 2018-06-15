@@ -16,17 +16,25 @@ def comp_choose_word(hand, word_list):
     hand: dictionary (string -> int)
     word_list: list (string)
     """
-    comp_words = get_perms(hand, HAND_SIZE)
-    comp_word_scores = [] * len(comp_words)
+    comp_words = []
+    for i in range(0, len(hand)):
+        comp_words.extend(get_perms(hand, i))
+
+    comp_word_scores = [''] * len(comp_words)
+    index = 0
 
     # Get scores for all word permutations. If real word, return word associated with max score. If not, return None
     for item in comp_words:
         if is_valid_word(item, hand, word_list):
-            comp_word_scores[item] = get_word_score(item, HAND_SIZE)
-            return comp_words[
-                comp_word_scores.index((max(comp_word_scores)))]  # Should return value at index of max score
+            comp_word_scores[index] = get_word_score(item, HAND_SIZE)
+            index += 1
         else:
-            return None
+            comp_word_scores[index] = 0
+            index += 1
+    if max(comp_word_scores) == 0:
+        return None
+    else:
+        return comp_words[comp_word_scores.index(max(comp_word_scores))]
 
 
 #
@@ -105,50 +113,59 @@ def play_game(word_list):
         second_choice = input('Please input "u" for user to play the game and "c" for computer to play the game: ')
         return second_choice
 
-    while first_choice() is not 'e':
-        if first_choice() == 'e':
+    choice_one = first_choice()  # Initialize first question
+
+    while choice_one != 'e':
+        if choice_one == 'e':  # Breakout condition
             break
 
-        elif first_choice() == 'n':
+        elif choice_one == 'n':
+            choice_two = second_choice()
 
-            if second_choice() == 'u':
+            if choice_two == 'u':
                 count += 1
                 new_hand = deal_hand(HAND_SIZE)  # Deal new hand, use that
                 last_hand = new_hand.copy()  # Store hand as last hand to replay
                 play_hand(new_hand, word_list, score)
-                first_choice()
+                choice_one = first_choice()
 
-            elif second_choice() == 'c':
+            elif choice_two == 'c':
                 count += 1
                 new_hand = deal_hand(HAND_SIZE)  # Deal new hand, use that
                 last_hand = new_hand.copy()  # Store hand as last hand to replay
                 comp_play_hand(new_hand, word_list, score)
-                first_choice()
+                choice_one = first_choice()
 
             else:
                 print('You have chosen an invalid option. Please try again.')
-                second_choice()
+                choice_one = first_choice()
 
-        elif first_choice() == 'r' and count != 0:
-            second_choice()
+        elif choice_one == 'r' and count != 0:
+            choice_two = second_choice()
 
-            if second_choice() == 'u':
+            if choice_two == 'u':
+                count += 1
                 play_hand(last_hand, word_list, score)
                 last_hand = new_hand.copy()
-                first_choice()
+                choice_one = first_choice()
 
-            elif second_choice() == 'c':
+            elif choice_two == 'c':
+                count += 1
                 comp_play_hand(last_hand, word_list, score)
                 last_hand = new_hand.copy()
-                first_choice()
+                choice_one = first_choice()
 
-        elif first_choice() == 'r' and count == 0:
+            else:
+                print('You have chosen an invalid option. Please try again.')
+                choice_one = first_choice()
+
+        elif choice_one == 'r' and count == 0:
             print('You have no hands to replay!')
-            first_choice()
+            choice_one = first_choice()
 
         else:
             print('You have chosen an invalid option. Please try again.')
-            first_choice()
+            choice_one = first_choice()
 
 #
 # Build data structures used for entire session and play game

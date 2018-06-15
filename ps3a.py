@@ -109,10 +109,11 @@ def display_hand(hand):
 
     hand: dictionary (string -> int)
     """
+    hand_letters = []
     for letter in hand.keys():
         for j in range(hand[letter]):
-            print(letter + " ")             # print all on the same line
-    print('')                               # print an empty line
+            hand_letters.append(letter)    # print all on the same line
+    return ' '.join(hand_letters)
 
 #
 # Make sure you understand how this function works and what it does!
@@ -131,15 +132,15 @@ def deal_hand(n):
     n: int >= 0
     returns: dictionary (string -> int)
     """
-    hand={}
+    hand = {}
     num_vowels = n / 3
     
-    for i in range(num_vowels):
-        x = VOWELS[random.randrange(0,len(VOWELS))]
+    for i in range(int(num_vowels)):
+        x = VOWELS[random.randrange(0, len(VOWELS))]
         hand[x] = hand.get(x, 0) + 1
         
-    for i in range(num_vowels, n):    
-        x = CONSONANTS[random.randrange(0,len(CONSONANTS))]
+    for i in range(int(num_vowels), n):
+        x = CONSONANTS[random.randrange(0, len(CONSONANTS))]
         hand[x] = hand.get(x, 0) + 1
         
     return hand
@@ -207,6 +208,7 @@ def calculate_handlen(hand):
 #
 # Problem #4: Playing a hand
 #
+
 def play_hand(hand, word_list):
 
     """
@@ -228,14 +230,47 @@ def play_hand(hand, word_list):
     * The sum of the word scores is displayed when the hand finishes.
 
     * The hand finishes when there are no more unused letters.
-      The user can also finish playing the hand by inputing a single
+      The user can also finish playing the hand by inputting a single
       period (the string '.') instead of a word.
 
       hand: dictionary (string -> int)
       word_list: list of lowercase strings
       
     """
-    # TO DO ...
+    total_score = []
+
+    def choose_word():
+        print('Current Hand: ' + display_hand(hand))
+        print('')
+        user_word = input('Enter word, or a "." to indicate that you are finished: ')
+        return user_word
+
+    user_word = choose_word()
+
+    if user_word == '.':
+        print('Total Score: ' + str(sum(total_score)))
+        quit()
+
+    elif not is_valid_word(user_word, hand, word_list):
+        print('Invalid word, Please try again.')
+        user_wordchoose_word()
+
+    else:
+        word_score = get_word_score(user_word, calculate_handlen(hand))
+        total_score.append(word_score)
+        print("'{0}' earned {1} points. Total: {2} points".format(user_word, word_score, sum(total_score)))
+        new_hand = update_hand(hand, user_word)
+
+        if len(new_hand) == 0:
+            print('Total Score: ' + str(sum(total_score)))
+            quit()
+        else:
+            choose_word()
+
+
+word_list = load_words()
+hand = deal_hand(9)
+play_hand(hand, word_list)
 
 #
 # Problem #5: Playing a game
@@ -262,6 +297,6 @@ def play_game(word_list):
 #
 # Build data structures used for entire session and play game
 #
-if __name__ == '__main__':
-    word_list = load_words()
-    play_game(word_list)
+# if __name__ == '__main__':
+#     word_list = load_words()
+#     play_game(word_list)

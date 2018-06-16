@@ -22,3 +22,10 @@
 - [x] Problem 1: Create function to calculate CPU  score of Scrabble-like word game
 - [x] Problem 2: Create functions to deal with how CPU hands of letters work
 - [x] Problem 3: Create function to allow user to play against the CPU
+
+## Problem Set 4
+ - [] Problem 1: Create function to encrypt plaintext into cyphertext using Caesar Cypher
+ - [] Problem 2: Create function to decrypt cyphertext into plaintext using Caesar Cypher
+ - [] Problem 3: Create multi-level encryption function using Caesar Cypher
+ - [] Problem 4: Create multi-level decryption function using Caesar Cypher
+ - [] Problem 5: Decrypt encrypted text file into plaintext
